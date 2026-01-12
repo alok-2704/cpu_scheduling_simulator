@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduling Simulator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>CPU Scheduling Simulator</h1>
+        <div id="errorMessage" class="floating-error" style="display: none;">
+            <span id="errorText"></span>
+            <button id="closeError">&times;</button>
+        </div>
+
+        <div class="section">
+            <h2>Input Section</h2>
+            <label for="numProcesses">Number of Processes:</label>
+            <input type="number" id="numProcesses" min="1">
+            <button id="generateBtn">Generate Fields</button>
+
+            <div id="processInputs"></div>
+        </div>
+
+        <div class="section">
+            <h2>Algorithm Section</h2>
+            <div class="algorithm-selection">
+                <label><input type="radio" name="algorithm" value="fcfs"> FCFS</label>
+                <label><input type="radio" name="algorithm" value="sjf"> SJF</label>
+                <label><input type="radio" name="algorithm" value="priority"> Priority</label>
+                <label><input type="radio" name="algorithm" value="rr"> Round Robin</label>
+            </div>
+            <label for="timeQuantum" id="timeQuantumLabel" style="display: none;">Time Quantum (Round Robin):</label>
+            <input type="number" id="timeQuantum" min="1" disabled style="display: none;">
+        </div>
+
+        <div class="section">
+            <h2>Control Section</h2>
+            <button id="runBtn">Run Scheduling</button>
+            <button id="runAllBtn">Run All Algorithms</button>
+            <button id="resetBtn">Reset</button>
+            <button id="pauseBtn">Pause</button>
+            <label for="speed">Animation Speed:</label>
+            <input type="range" id="speed" min="1" max="30" value="0">
+            <span id="speedValue">0</span>
+        </div>
+
+        <div class="section">
+            <h2>Output Section</h2>
+            <pre id="output"></pre>
+            <button id="bestBtn" style="display: none;">Show Best Algorithm</button>
+            <div id="bestLabel"></div>
+            <div id="ganttButtons" style="display: none;">
+                <p>Show Gantt Chart For:</p>
+                <button class="ganttBtn" data-algo="fcfs">FCFS</button>
+                <button class="ganttBtn" data-algo="sjf">SJF</button>
+                <button class="ganttBtn" data-algo="rr">Round Robin</button>
+                <button class="ganttBtn" data-algo="priority">Priority</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Visualization Section</h2>
+            <div class="gantt-container">
+                <canvas id="ganttCanvas" width="900" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+- [x] Modify animateGantt function in static/js/app.js to calculate total time and set canvas width dynamically
+- [x] Update CSS in static/css/style.css to remove max-width on .gantt-container
+- [x] Update resetGUI function in static/js/app.js to reset canvas width to 900px
