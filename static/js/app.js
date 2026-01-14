@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('bestBtn').addEventListener('click', showBestAlgorithm);
     document.getElementById('pauseBtn').addEventListener('click', togglePause);
     document.getElementById('speed').addEventListener('input', updateSpeed);
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
     document.querySelectorAll('input[name="algorithm"]').forEach(radio => {
         radio.addEventListener('change', updateAlgorithm);
     });
@@ -415,4 +416,16 @@ function showError(message) {
 function hideError() {
     const errorDiv = document.getElementById('errorMessage');
     errorDiv.style.display = 'none';
+}
+
+function toggleTheme() {
+    const body = document.body;
+    const toggleBtn = document.getElementById('themeToggle');
+    if (body.classList.contains('light-theme')) {
+        body.classList.remove('light-theme');
+        toggleBtn.textContent = 'Switch to Light Theme';
+    } else {
+        body.classList.add('light-theme');
+        toggleBtn.textContent = 'Switch to Dark Theme';
+    }
 }

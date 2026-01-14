@@ -1,3 +1,6 @@
-- [x] Modify animateGantt function in static/js/app.js to calculate total time and set canvas width dynamically
-- [x] Update CSS in static/css/style.css to remove max-width on .gantt-container
-- [x] Update resetGUI function in static/js/app.js to reset canvas width to 900px
+# TODO: Add Light/Dark Theme Toggle Button
+
+- [ ] Add theme toggle button to Control Section in templates/index.html
+- [ ] Update static/css/style.css to use CSS variables and add .light-theme class
+- [ ] Add toggle functionality in static/js/app.js
+- [ ] Test the toggle functionality
