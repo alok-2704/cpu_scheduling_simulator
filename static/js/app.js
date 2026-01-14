@@ -348,7 +348,8 @@ function animateGantt(gantt) {
     const canvas = document.getElementById('ganttCanvas');
     const ctx = canvas.getContext('2d');
 
-    const scale = 35;
+    const isMobile = window.innerWidth < 768;
+    const scale = isMobile ? 20 : 35;
     const y = 50;
     let x = 20;
 
@@ -396,15 +397,15 @@ function animateGantt(gantt) {
                 setTimeout(() => grow(currentWidth + 4), delay);
             } else {
                 // Draw PID statically after animation
-                const isNarrow = width < 50;
-                const boxWidth = isNarrow ? 24 : 30;
-                const boxHeight = isNarrow ? 12 : 15;
-                const fontSize = isNarrow ? '10px' : '12px';
-                const textY = isNarrow ? y + 20 : y + 22;
+                const isNarrow = width < (isMobile ? 30 : 50);
+                const boxWidth = isNarrow ? (isMobile ? 20 : 24) : 30;
+                const boxHeight = isNarrow ? (isMobile ? 10 : 12) : 15;
+                const fontSize = isNarrow ? (isMobile ? '8px' : '10px') : '12px';
+                const textY = isNarrow ? (isMobile ? y + 18 : y + 20) : y + 22;
 
                 ctx.fillRect(x + width/2 - boxWidth/2, y + 12, boxWidth, boxHeight);
                 ctx.fillStyle = 'black';
-                ctx.font = `bold ${fontSize} Arial`;
+                ctx.font = `${fontSize} Arial`;
                 ctx.textAlign = 'center';
                 ctx.fillText(pid, x + width/2, textY);
                 x += width;
