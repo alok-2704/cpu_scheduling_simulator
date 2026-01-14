@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('pauseBtn').addEventListener('click', togglePause);
     document.getElementById('speed').addEventListener('input', updateSpeed);
     document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
     document.querySelectorAll('input[name="algorithm"]').forEach(radio => {
         radio.addEventListener('change', updateAlgorithm);
     });
@@ -100,6 +101,22 @@ function togglePause() {
 function collectProcesses() {
     processes = [];
     const rows = document.querySelectorAll('.process-row');
+
+    // Check priorities collectively if algorithm is priority
+    if (algorithm === 'priority') {
+        let priorityMissing = false;
+        rows.forEach(row => {
+            const priority = parseInt(row.querySelector('.priority').value);
+            if (isNaN(priority) || priority < 0) {
+                priorityMissing = true;
+            }
+        });
+        if (priorityMissing) {
+            showError('Please add priority for the processes.');
+            return false;
+        }
+    }
+
     for (let index = 0; index < rows.length; index++) {
         const row = rows[index];
         const arrival = parseInt(row.querySelector('.arrival').value);
@@ -111,10 +128,6 @@ function collectProcesses() {
         }
         if (isNaN(burst) || burst < 1) {
             showError(`Invalid burst time for P${index+1}. Must be at least 1.`);
-            return false;
-        }
-        if (algorithm === 'priority' && (isNaN(priority) || priority < 0)) {
-            showError(`Invalid priority for P${index+1}. Must be a non-negative number.`);
             return false;
         }
         processes.push({
@@ -163,6 +176,7 @@ function runSimulation() {
     .then(data => {
         displayResults(data);
         animateGantt(data.gantt);
+        document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
     })
     .catch(error => {
         showError('Error running simulation: ' + error.message);
@@ -185,21 +199,29 @@ function runAllSimulations() {
 
     if (!collectProcesses()) return;
 
+    // Collect all errors
+    let errors = [];
+
     // Check priorities
-    let priorityError = false;
-    priorityInputs.forEach((input, index) => {
+    let priorityMissing = false;
+    priorityInputs.forEach(input => {
         const priority = parseInt(input.value);
         if (isNaN(priority) || priority < 0) {
-            showError(`Invalid priority for P${index+1}. Must be a non-negative number.`);
-            priorityError = true;
+            priorityMissing = true;
         }
     });
-    if (priorityError) return;
+    if (priorityMissing) {
+        errors.push('Please add priority for the processes.    ');
+    }
 
     // Check time quantum
     timeQuantum = parseInt(document.getElementById('timeQuantum').value);
     if (isNaN(timeQuantum) || timeQuantum < 1) {
-        showError('Invalid time quantum. Must be at least 1.');
+        errors.push('Please add time quantum for the processes.');
+    }
+
+    if (errors.length > 0) {
+        showError(errors.join('\n'));
         return;
     }
 
@@ -224,6 +246,7 @@ function runAllSimulations() {
         displayAllResults(data);
         document.getElementById('bestBtn').style.display = 'inline-block';
         document.getElementById('ganttButtons').style.display = 'block';
+        document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
     })
     .catch(error => {
         showError('Error running all simulations: ' + error.message);
@@ -373,12 +396,17 @@ function animateGantt(gantt) {
                 setTimeout(() => grow(currentWidth + 4), delay);
             } else {
                 // Draw PID statically after animation
+                const isNarrow = width < 50;
+                const boxWidth = isNarrow ? 24 : 30;
+                const boxHeight = isNarrow ? 12 : 15;
+                const fontSize = isNarrow ? '10px' : '12px';
+                const textY = isNarrow ? y + 20 : y + 22;
 
-                ctx.fillRect(x + width/2 - 15, y + 12, 30, 15);
+                ctx.fillRect(x + width/2 - boxWidth/2, y + 12, boxWidth, boxHeight);
                 ctx.fillStyle = 'black';
-                ctx.font = 'bold 12px Arial';
+                ctx.font = `bold ${fontSize} Arial`;
                 ctx.textAlign = 'center';
-                ctx.fillText(pid, x + width/2, y + 22);
+                ctx.fillText(pid, x + width/2, textY);
                 x += width;
                 draw(i + 1);
             }

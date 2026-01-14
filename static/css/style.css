@@ -45,6 +45,7 @@ body {
 .container {
     max-width: 1000px;
     margin: 0 auto;
+    position: relative;
 }
 
 h1 {
@@ -168,10 +169,11 @@ button:hover {
 }
 
 #themeToggle {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    z-index: 1001;
+    padding: 5px 10px;
+    font-size: 12px;
+    display: block;
+    margin: 10px 0 0 auto;
+    width: fit-content;
 }
 
 /* Mobile view adjustments */

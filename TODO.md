@@ -1,6 +1,5 @@
-# TODO: Add Light/Dark Theme Toggle Button
+# TODO: Fix PID Squeeze and Adjust Theme Button for Mobile
 
-- [ ] Add theme toggle button to Control Section in templates/index.html
-- [ ] Update static/css/style.css to use CSS variables and add .light-theme class
-- [ ] Add toggle functionality in static/js/app.js
-- [ ] Test the toggle functionality
+- [x] Update static/css/style.css to make #themeToggle smaller in mobile view while keeping it at bottom right
+- [x] Update static/js/app.js to use smaller font and box for PID text on narrow Gantt bars
+- [x] Test the changes on mobile view to ensure PID fits and button is smaller
