@@ -42,7 +42,7 @@ function generateProcessInputs() {
         const row = document.createElement('div');
         row.className = 'process-row';
         row.innerHTML = `
-            <label>P${i+1}</label>
+            <label>P${i+1}:   </label>
             <label>Arrival: <input type="number" class="arrival" min="0"></label>
             <label>Burst: <input type="number" class="burst" min="1"></label>
             <label class="priority-label" style="display: none;">Priority: <input type="number" class="priority" min="0" disabled></label>
