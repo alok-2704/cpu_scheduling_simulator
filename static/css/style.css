@@ -199,7 +199,7 @@ button:hover {
     }
 
     .process-row label {
-        min-width: 16%;
+        min-width: auto;
         margin-bottom: 2px;
     }
 
@@ -216,6 +216,34 @@ button:hover {
     .process-row input[type="number"] {
         width: 50%;
         box-sizing: border-box;
+    }
+}
+
+@media (max-width: 480px) {
+    .process-row input[type="number"] {
+        width: 40%;
+        box-sizing: border-box;
+    }
+    .process-row label {
+        min-width: 10%;
+    }
+}
+
+@media (max-width: 430px) {
+    .process-row label {
+        min-width: 15%;
+        margin-bottom: 2px;
+    }
+}
+
+@media (max-width: 400px) {
+    .process-row input[type="number"] {
+        width: 25%;
+        box-sizing: border-box;
+    }
+    .process-row label {
+        min-width: 8%;
+        font-size: 12px;
     }
 }
 
